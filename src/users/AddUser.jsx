@@ -1,85 +1,127 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function AddUser() {
-  return (
-    <div className="container">
-      Add Student Form
-      <div className="row">
-        <div classname="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Student Registration Form</h2>
-          <div className="mb-3">
-            <label htmlFor="First Name" className="form-label">
-              First Name
-            </label>
+  let navigate = useNavigate();
+  const [user, setUser] = useState({
+    fname: "",
+    LastName: "",
+    Course: "",
+    Grade: "",
+    City: "",
+    Gender: "",
+  });
 
+  const { fname, LastName, Course, Grade, City, Gender } = user;
+
+  const onInputChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:8080/AddUser", user);
+    navigate("/");
+  };
+
+  return (
+
+     <div className="container">
+        <div className="row">
+    <div className="container vh-100 d-flex justify-content-center align-items-center">
+      <div className="card shadow-lg p-2"
+        style={{ width: "500px", borderRadius: "10px", position: "fixed" }}
+      >
+        <h2 className="text-center m-4">Student Registration Form</h2>
+
+        <form onSubmit={(e) => onSubmit(e)}>
+
+
+          <div className="mb-3">
+            <label className="form-label">First Name</label>
             <input
               type={"text"}
               className="form-control"
               placeholder="Enter your first name"
-              name="First name"
+              name="fname"
+              value={fname}
+              onChange={(e) =>onInputChange(e)}
             />
           </div>
+
           <div className="mb-3">
-            <label htmlFor="LAst Name" className="form-label">
-              Last Name
-            </label>
+            <label className="form-label">Last Name</label>
             <input
               type={"text"}
               className="form-control"
               placeholder="Enter your last name"
-              name="Last name"
+              name="LastName"
+              value={LastName}
+              onChange={(e) =>onInputChange(e)}
             />
           </div>
+
           <div className="mb-3">
-            <label htmlFor="Course" className="form-label">
-              Course
-            </label>
+            <label className="form-label">Course</label>
             <input
               type={"text"}
               className="form-control"
               placeholder="Enter your course name"
               name="Course"
+              value={Course}
+              onChange={(e) =>onInputChange(e)}
             />
           </div>
+
           <div className="mb-3">
-            <label htmlFor="Grade" className="form-label">
-              Grade
-            </label>
+            <label className="form-label">Grade</label>
             <input
               type={"text"}
               className="form-control"
-              placeholder="Enter your grade "
+              placeholder="Enter your grade"
               name="Grade"
+              value={Grade}
+             onChange={(e) =>onInputChange(e)}
             />
           </div>
+
           <div className="mb-3">
-            <label htmlFor="City" className="form-label">
-              City
-            </label>
+            <label className="form-label">City</label>
             <input
               type={"text"}
               className="form-control"
-              placeholder="Enter your city "
+              placeholder="Enter your city"
               name="City"
+              value={City}
+              onChange={(e) =>onInputChange(e)}
             />
           </div>
+
           <div className="mb-3">
-            <label htmlFor="Gender" className="form-label">
-              Gender
-            </label>
+            <label className="form-label">Gender</label>
             <input
               type={"text"}
               className="form-control"
               placeholder="Enter your gender"
               name="Gender"
+              value={Gender}
+             onChange={(e) =>onInputChange(e)}
             />
           </div>
-
-          <button type = "Submit" className = "btn btn-outline-primary">Submit</button>
-                    <button type = "Cancel" className = "btn btn-outline-danger mx-2">Cancel</button>
-        </div>
+          
+            <button type="submit" className="btn btn-outline-primary">
+              Submit
+            </button>
+            <Link className="btn btn-outline-danger mx-2" to="/">
+              Cancel
+            </Link>
+        </form>
       </div>
+    </div>
+    </div>
     </div>
   );
 }
+
 export default AddUser;
