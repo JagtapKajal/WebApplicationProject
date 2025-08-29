@@ -1,8 +1,26 @@
-.table{
+ .table{
    background-color: #b5de89;
     position: fixed;
-   top: 10%;
-    left: 0;
+   top: 15%;
+    left: 10%;
+    margin-right: 10%;
     width: 100%;
     text-align: center;
+} 
+ table {
+  width: 100% !important;
+}
+.container, .container-fluid {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.table-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.table-container table {
+  width: 100%;
 }
