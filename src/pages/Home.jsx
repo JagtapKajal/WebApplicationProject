@@ -1,42 +1,59 @@
-import React from "react";
-import "./home.css"; 
+import React, { useEffect, useState } from "react";
+import "./home.css";
+import axios from "axios";
 
 export default function Home() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    const result = await axios.get("http://localhost:8080/AllUsers");
+    setUsers(result.data);
+  };
+
   return (
-    <div className="container-fluid px-0">
+    <div className="container">
       <div className="row">
-              <div className="col-12">
-        <table className="table table-bordered table-striped text-center mb-0 w-100">
-          <thead className="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>John</td>
-              <td>Doe</td>
-              <td>@social</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div className="col-12">
+          <table className="table table-bordered table-striped text-center mb-0 w-100">
+            <thead className="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">City</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Course</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr key={user.id || index}>
+                  <td>{index + 1}</td>
+                  <td>{user.id}</td>
+                  <td>{user.fname}</td>
+                  <td>{user.lname}</td>
+                  <td>{user.gender}</td>
+                  <td>{user.city}</td>
+                  <td>{user.grade}</td>
+                  <td>{user.course}</td>
+                  <td>
+                    <button className="btn btn-primary mx-2">View</button>
+                    <button className="btn btn-outline-primary mx-2">
+                      Edit
+                    </button>
+                    <button className="btn btn-danger mx-2">Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
